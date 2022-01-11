@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/16 12:11:00 by fbechtol          #+#    #+#             */
-/*   Updated: 2021/07/06 18:36:50 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/11 18:48:31 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
+	if (!s)
+		return (-1);
 	i = 0;
 	while (s[i])
 	{
