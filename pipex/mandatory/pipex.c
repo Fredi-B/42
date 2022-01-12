@@ -1,30 +1,32 @@
 #include "pipex.h"
 
+void	init_struct(t_pipex *data, char **env);
+
 int	main(int argc, char **argv, char **env)
 {
-	char	*path;
-	int		i;
+	t_pipex	data;
 
-	argc = 0;
-	argv[0] = "t";
-	path = NULL;
+	init_struct(&data, env);
+	put_input_in_struct(argc, argv, env, &data);
+
+
+
+}
+
+void	init_struct(t_pipex *data, char **env)
+{
+	int	i;
+
+	data->cmds = NULL;
+	data->files = NULL;
+	data->paths = NULL;
 	i = 0;
-	while (1)
+	while (env[i] != NULL)
 	{
-		printf("%s\n", env[i]);
-		if (env[i] == NULL)
-		{
-			write(STDERR_FILENO, "PATH not found\n", 15);
-			break ;
-		}
-		if (ft_strnstr(env[i], "eafedfa=", ft_strlen(env[i])) != NULL)
-		{
-			path = ft_strnstr(env[i], "eafedfa=", ft_strlen(env[i]));
-			break ;
-		}
-
+		write(1, "test\n", 6);
+		/* data->envp mallocen? */
+		ft_strlcpy(data->envp[i], env[i], ft_strlen(env[i]));
+		dsprintf(env[i]);
 		i++;
 	}
-	printf("%s\n", path);
-	return (0);
 }
