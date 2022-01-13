@@ -1,6 +1,7 @@
 #include "pipex.h"
 
-void	init_struct(t_pipex *data, char **env);
+static void	init_struct(t_pipex *data, char **env);
+static void	cpy_env(char **env, t_pipex *data);
 
 int	main(int argc, char **argv, char **env)
 {
@@ -8,25 +9,31 @@ int	main(int argc, char **argv, char **env)
 
 	init_struct(&data, env);
 	put_input_in_struct(argc, argv, env, &data);
-
-
-
+	return (0);
 }
 
-void	init_struct(t_pipex *data, char **env)
+static void	init_struct(t_pipex *data, char **env)
 {
-	int	i;
-
-	data->cmds = NULL;
-	data->files = NULL;
 	data->paths = NULL;
-	i = 0;
-	while (env[i] != NULL)
+	data->files = NULL;
+	cpy_env(env, data);
+	data->cmds = NULL;
+	data->head = NULL;
+}
+
+static void	cpy_env(char **env, t_pipex *data)
+{
+	int	env_cnt;
+
+	env_cnt = 0;
+	while (env[env_cnt] != NULL)
+		env_cnt++;
+	/* to do: free data->envp */
+	data->envp = (char **)malloc(sizeof(char *) * env_cnt);
+	while (env_cnt > 0)
 	{
-		write(1, "test\n", 6);
-		/* data->envp mallocen? */
-		ft_strlcpy(data->envp[i], env[i], ft_strlen(env[i]));
-		dsprintf(env[i]);
-		i++;
+		/* to do: free data->envp[] */
+		data->envp[env_cnt] = ft_strdup(env[env_cnt]);
+		env_cnt--;
 	}
 }
