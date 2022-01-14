@@ -6,7 +6,7 @@
 #    By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 14:37:51 by fbechtol          #+#    #+#              #
-#    Updated: 2022/01/13 19:52:29 by fbechtol         ###   ########.fr        #
+#    Updated: 2022/01/14 12:00:50 by fbechtol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME = pipex
 CFLAGS = -Wall -Wextra -Werror
 # -L followed by the relative path of the library to link it 
 LIBFT_LINKING = -L ../libft -lft
-CFILES = pipex.c parsing.c err_exit.c
+CFILES = pipex.c parsing.c parsing_utils.c err_exit.c
 OBJECTS = $(patsubst %.c,%.o,$(CFILES))
 
 $(NAME): $(OBJECTS) 
