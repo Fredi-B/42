@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/13 19:27:36 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/14 09:31:09 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ typedef struct s_pipex
 /*  ----------------------------- parsing.c -------------------------------- */
 
 void	put_input_in_struct(int argc, char **argv, char **env, t_pipex *data);
+
+/*  -------------------------- parsing_utils.c ----------------------------- */
+
+void	join_path_and_cmds(t_pipex *data);
+
 
 /*  ----------------------------- err_exit.c -------------------------------- */
 
