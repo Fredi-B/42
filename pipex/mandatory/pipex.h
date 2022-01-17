@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/14 09:31:09 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:06:09 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,8 @@
 
 typedef struct s_cmd_node
 {
-	/* here goes cmd joined with path */
 	char				*cmd_path;
-	/* here goes cmd joined with path and flags */
-	char				*path_and_flags;
+	char				**path_and_flags;
 	struct s_cmd_node	*next;
 }				t_cmd_node;
 
@@ -49,7 +47,6 @@ typedef struct s_pipex
 	char	**paths;
 	char	**files;
 	char	**envp;
-	/* brauch i das? oder übergebe ich beide struct seperat lieber? */
 	t_cmd_node	*cmds;
 	t_cmd_node	*head;
 }				t_pipex;
@@ -58,11 +55,12 @@ typedef struct s_pipex
 
 /*  ----------------------------- parsing.c -------------------------------- */
 
-void	put_input_in_struct(int argc, char **argv, char **env, t_pipex *data);
+void	parsing(int argc, char **argv, char **env, t_pipex *data);
 
 /*  -------------------------- parsing_utils.c ----------------------------- */
 
 void	join_path_and_cmds(t_pipex *data);
+void	get_files(int argc, char **argv, t_pipex *data);
 
 
 /*  ----------------------------- err_exit.c -------------------------------- */
