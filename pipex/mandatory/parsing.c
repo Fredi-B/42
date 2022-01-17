@@ -3,10 +3,12 @@ static char	*get_paths_from_env(char **env, t_pipex *data);
 static int	get_prefix_len(char *env);
 static void	get_cmds(int argc, char **argv, t_pipex *data);
 
-void	put_input_in_struct(int argc, char **argv, char **env, t_pipex *data)
+void	parsing(int argc, char **argv, char **env, t_pipex *data)
 {
 	get_paths_from_env(env, data);
 	get_cmds(argc, argv, data);
+	join_path_and_cmds(data);
+	get_files(argc, argv, data);
 }
 
 static char	*get_paths_from_env(char **env, t_pipex *data)
@@ -60,6 +62,7 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 	int			i;
 	char		**tmp_argv;
 
+
 	i = argc - 2;
 	while (i >= 2)
 	{
@@ -68,12 +71,16 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 		if (!new_node)
 			return ;
 		data->cmds = new_node;
-		data->cmds->path_and_flags = argv[i];
+		/* Notiz an mich: hab path_and_flags von * zu ** gewechselt.
+		Unschöne Nebenwirkung, dass ich jetzt argv[i]
+		in einem doppel pointer vorübergehend speicher */
+		data->cmds->path_and_flags = &argv[i];
 		/* to do: free tmp_argv */
 		tmp_argv = ft_split(argv[i], ' ');
 		// if (!tmp_argv)
 		// 	err_exit(data, "", 0);
-		data->cmds->cmd_path = tmp_argv[0];
+		data->cmds->cmd_path = ft_strdup(tmp_argv[0]);
+		free_two_d_arr(tmp_argv);
 		if (data->cmds == NULL)
 		{
 			data->head = new_node;
@@ -85,12 +92,5 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 			data->head = new_node;
 		}
 		i--;
-	}
-	/* for checking only */
-	while (data->cmds)
-	{
-		dsprintf(data->cmds->path_and_flags);
-		dsprintf(data->cmds->cmd_path);
-		data->cmds = data->cmds->next;
 	}
 }
