@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/13 15:34:15 by fbechtol          #+#    #+#             */
-/*   Updated: 2021/07/22 11:36:46 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/17 17:07:45 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ static void	ft_splitted_str(char **arr, char const *s, char c, size_t count)
 		arr[i] = ft_substr(s, start, j - start);
 		i++;
 	}
-	arr[i] = 0;
+	arr[i] = NULL;
 }
