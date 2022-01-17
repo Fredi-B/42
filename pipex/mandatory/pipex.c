@@ -8,7 +8,7 @@ int	main(int argc, char **argv, char **env)
 	t_pipex	data;
 
 	init_struct(&data, env);
-	put_input_in_struct(argc, argv, env, &data);
+	parsing(argc, argv, env, &data);
 	return (0);
 }
 
@@ -30,6 +30,9 @@ static void	cpy_env(char **env, t_pipex *data)
 		env_cnt++;
 	/* to do: free data->envp */
 	data->envp = (char **)malloc(sizeof(char *) * env_cnt);
+	/* to do: protecten */
+	// if (data->envp == NULL)
+	// 	exit(0);
 	while (env_cnt > 0)
 	{
 		/* to do: free data->envp[] */
