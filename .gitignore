@@ -55,3 +55,6 @@ dkms.conf
 
 # Other
 .DS_Store
+pipex/mandatory/infile
+.gitignore
+pipex/mandatory/outfile
