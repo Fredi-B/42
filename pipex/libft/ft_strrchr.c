@@ -14,11 +14,9 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
 	int	slen;
 
 	slen = ft_strlen(s);
-	i = 0;
 	while (slen >= 0)
 	{
 		if (s[slen] == c)
