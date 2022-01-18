@@ -21,6 +21,9 @@
 # include <stdio.h>
 # include <limits.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 /* ----------------------------- Defines ----------------------------------- */
 
@@ -49,6 +52,10 @@ typedef struct s_pipex
 	char	**envp;
 	t_cmd_node	*cmds;
 	t_cmd_node	*head;
+	//fd_pipe mallocen?
+	int		*fd_pipe;
+	int		pid1;
+	int		pid2;
 }				t_pipex;
 
 /*  ------------------------ Function prototypes --------------------------- */
@@ -61,6 +68,13 @@ void	parsing(int argc, char **argv, char **env, t_pipex *data);
 
 void	join_path_and_cmds(t_pipex *data);
 void	get_files(int argc, char **argv, t_pipex *data);
+
+/*  ------------------------------ piping.c -------------------------------- */
+
+void	write_in_pipe(t_pipex *data);
+void	read_from_pipe(t_pipex *data);
+
+
 
 
 /*  ----------------------------- err_exit.c -------------------------------- */
