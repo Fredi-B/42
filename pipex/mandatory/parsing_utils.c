@@ -63,9 +63,4 @@ void	get_files(int argc, char **argv, t_pipex *data)
 	/* to do: protecten */
 	data->files[0] = argv[1];
 	data->files[1] = argv[argc -1];
-	if (access(data->files[0], R_OK) != 0 || access(data->files[1], W_OK) != 0)
-	{
-		/* to do: error handling */
-		dsprintf("error");
-	}
 }
