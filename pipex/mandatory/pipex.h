@@ -66,19 +66,20 @@ void	parsing(int argc, char **argv, char **env, t_pipex *data);
 
 /*  -------------------------- parsing_utils.c ----------------------------- */
 
-void	join_path_and_cmds(t_pipex *data);
-void	get_files(int argc, char **argv, t_pipex *data);
+char	*add_slash_and_join(char *path, char *cmd_part);
+int		get_prefix_len(char *env);
 
 /*  ------------------------------ piping.c -------------------------------- */
 
-void	write_in_pipe(t_pipex *data);
-void	read_from_pipe(t_pipex *data);
+void	piping(t_pipex *data);
+
 
 
 
 
 /*  ----------------------------- err_exit.c -------------------------------- */
 
+void	free_data(t_pipex *data);
 void	err_exit(t_pipex *data, char *msg, int len);
 void	free_two_d_arr(char **arr);
 
