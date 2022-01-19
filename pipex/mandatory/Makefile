@@ -14,7 +14,7 @@
 
 NAME = pipex
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-ggdb3 -fsanitize=address
 # -L followed by the relative path of the library to link it 
 LIBFT_LINKING = -L ../libft -lft
 CFILES = pipex.c parsing.c parsing_utils.c piping.c err_exit.c
