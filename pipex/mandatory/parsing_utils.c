@@ -1,48 +1,24 @@
 #include "pipex.h"
 
-char	*add_slash_and_join(char *path, char *cmd_part);
-
-void	join_path_and_cmds(t_pipex *data)
+//für mandatory part total unnötig:
+//Länge vom prefix hat man ja schon im if statement
+int	get_prefix_len(char *env)
 {
-	char	*tmp_c_p;
-	char	*tmp_p_f;
+	char	**prefix;
+	int		len;
 	int		i;
 
-	data->cmds = data->head;
-	while (data->cmds != NULL)
+	len = 0;
+	prefix = ft_split(env, '=');
+	len = ft_strlen(prefix[0]);
+	i = 0;
+	while (prefix[i])
 	{
-		i = 0;
-		while (data->paths[i] != NULL)
-		{
-			tmp_c_p = add_slash_and_join(data->paths[i], data->cmds->cmd_path);
-			if (access(tmp_c_p, X_OK) == 0)
-			{
-				free(data->cmds->cmd_path);
-				/* to do: free data->cmds->cmd_path */
-				data->cmds->cmd_path = tmp_c_p;
-				tmp_p_f = add_slash_and_join(data->paths[i], *data->cmds->path_and_flags);
-				/* to do: free data->cmds->path_and_flags */
-				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');
-				free(tmp_p_f);
-				break ;
-			}
-			free(tmp_c_p);
-			i++;
-			/* hier schon prüfen, ob die cmds aus dem Input valide sind? 
-			d.h. prüfen, ob if (access()) in der while Schleife mal wahr war.
-			Wenn nicht, mit Fehlermsg raus? */
-		}
-		data->cmds = data->cmds->next;
+		free(prefix[i]);
+		i++;
 	}
-	/* for checking only */
-	// data->cmds = data->head;
-	// while (data->cmds)
-	// {
-	// 	dsprintf(data->cmds->path_and_flags);
-	// 	dsprintf(data->cmds->cmd_path);
-	// 	data->cmds = data->cmds->next;
-	// }
-
+	free(prefix);
+	return (len + 1);
 }
 
 char	*add_slash_and_join(char *path, char *cmd_part)
@@ -54,13 +30,4 @@ char	*add_slash_and_join(char *path, char *cmd_part)
 	tmp = ft_strjoin(tmp_path, cmd_part);
 	free(tmp_path);
 	return (tmp);
-}
-
-
-void	get_files(int argc, char **argv, t_pipex *data)
-{
-	data->files = (char **)malloc(sizeof(char *) * 2);
-	/* to do: protecten */
-	data->files[0] = argv[1];
-	data->files[1] = argv[argc -1];
 }
