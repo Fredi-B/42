@@ -101,6 +101,9 @@ static void	join_path_and_cmds(t_pipex *data)
 			i++;
 			if (data->paths[i] == NULL)
 			{
+				//einfach path_and_flags mit iwas füllen ^^
+				//data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
+
 				write(2, "command not found: ", 19);
 				err_exit(data, data->cmds->cmd_path, ft_strlen(data->cmds->cmd_path));
 			}
