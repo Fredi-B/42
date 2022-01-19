@@ -1,6 +1,35 @@
 #include "pipex.h"
 
-void	write_in_pipe(t_pipex *data)
+static void	write_in_pipe(t_pipex *data);
+static void	read_from_pipe(t_pipex *data);
+
+void	piping(t_pipex *data)
+{
+	data->fd_pipe = (int *)malloc(sizeof(int) * 2);
+	if (pipe(data->fd_pipe) == -1)
+		return ; //to do: error handling
+	data->cmds = data->head; //woanners hin? durchloopen?
+	data->pid1 = fork();
+	if (data->pid1 == -1)
+		return ; //to do: error handling
+	if (data->pid1 == 0)
+		write_in_pipe(data);
+	if (data->pid1 != 0)
+	{
+		wait(NULL);
+		data->cmds = data->cmds->next; //woanners hin? durchloopen?
+		data->pid2 = fork();
+		if (data->pid2 == -1)
+			return ; //to do: error handling
+		if (data->pid2 == 0)
+			read_from_pipe(data);
+	}
+	close(data->fd_pipe[0]);
+	close(data->fd_pipe[1]);
+	wait(NULL);
+}
+
+static void	write_in_pipe(t_pipex *data)
 {
 	int	fd_infile;
 
@@ -8,15 +37,15 @@ void	write_in_pipe(t_pipex *data)
 	if (dup2(data->fd_pipe[1], 1) == -1)
 		return ; //to do: error handling
 	close(data->fd_pipe[1]);
-	fd_infile = open(data->files[0], O_CREAT | O_RDONLY, 777);
-	if (dup2(fd_infile, 0) == -1)
+	fd_infile = open(data->files[0], O_CREAT | O_RDONLY, 0777);
+	if (dup2(fd_infile, STDIN_FILENO) == -1)
 		return ; //to do: error handling
 	close(fd_infile);
 	//to do: protecten (falls es cmd nicht gibt o.ä.: siehe test_execve.c)
 	execve(data->cmds->cmd_path, data->cmds->path_and_flags, data->envp);
 }
 
-void	read_from_pipe(t_pipex *data)
+static void	read_from_pipe(t_pipex *data)
 {
 	int	fd_outfile;
 
@@ -24,13 +53,10 @@ void	read_from_pipe(t_pipex *data)
 	if (dup2(data->fd_pipe[0], 0) == -1)
 		return ; //to do: error handling
 	close(data->fd_pipe[0]);
-	fd_outfile = open(data->files[1], O_CREAT | O_WRONLY, 777);
-	if (dup2(fd_outfile, 1) == -1)
+	fd_outfile = open(data->files[1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (dup2(fd_outfile, STDOUT_FILENO) == -1)
 		return ; //to do: error handling
 	close(fd_outfile);
-	data->cmds = data->head->next; //woanners hin? durchloopen?
 	//to do: protecten (falls es cmd nicht gibt o.ä.: siehe test_execve.c)
 	execve(data->cmds->cmd_path, data->cmds->path_and_flags, data->envp);
-	write(2, "test\n", 5);
-	
 }
