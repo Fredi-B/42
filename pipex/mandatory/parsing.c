@@ -22,7 +22,7 @@ static char	*get_paths_from_env(char **env, t_pipex *data)
 	while (1)
 	{
 		if (env[i] == NULL)
-			err_exit(data, "PATH not found\n", 15);
+			err_exit(data, "PATH not found", 14);
 		if (ft_strnstr(env[i], "PATH=", ft_strlen("PATH=")) != NULL)
 		{
 			len_prefix = get_prefix_len(env[i]);
@@ -45,13 +45,12 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 	{
 		new_node = (t_cmd_node *)malloc(sizeof(t_cmd_node));
 		if (!new_node)
-			err_exit(data, "Error: malloc new_node\n", 23);
+			err_exit(data, "Error: malloc new_node", 22);
 		data->cmds = new_node;
 		/* Notiz an mich: hab path_and_flags von * zu ** gewechselt.
 		Unschöne Nebenwirkung, dass ich jetzt argv[i]
 		in einem doppel pointer vorübergehend speicher */
 		data->cmds->path_and_flags = &argv[i];
-		/* to do: free tmp_argv */
 		tmp_argv = ft_split(argv[i], ' ');
 		if (!tmp_argv)
 			err_exit(data, "Error: split argv[i]", 20);
@@ -89,10 +88,8 @@ static void	join_path_and_cmds(t_pipex *data)
 			if (access(tmp_c_p, X_OK) == 0)
 			{
 				free(data->cmds->cmd_path);
-				/* to do: free data->cmds->cmd_path */
 				data->cmds->cmd_path = tmp_c_p;
 				tmp_p_f = add_slash_and_join(data->paths[i], *data->cmds->path_and_flags);
-				/* to do: free data->cmds->path_and_flags */
 				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
 				free(tmp_p_f);
 				break ;
@@ -101,27 +98,15 @@ static void	join_path_and_cmds(t_pipex *data)
 			i++;
 			if (data->paths[i] == NULL)
 			{
-				//einfach path_and_flags mit iwas füllen ^^
-				//data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
-
+				tmp_p_f = add_slash_and_join(data->paths[i], *data->cmds->path_and_flags);
+				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
+				free(tmp_p_f);
 				write(2, "command not found: ", 19);
 				err_exit(data, data->cmds->cmd_path, ft_strlen(data->cmds->cmd_path));
 			}
-			/* hier schon prüfen, ob die cmds aus dem Input valide sind? 
-			d.h. prüfen, ob if (access()) in der while Schleife mal wahr war.
-			Wenn nicht, mit Fehlermsg raus? */
 		}
 		data->cmds = data->cmds->next;
 	}
-	/* for checking only */
-	// data->cmds = data->head;
-	// while (data->cmds)
-	// {
-	// 	dsprintf(data->cmds->path_and_flags);
-	// 	dsprintf(data->cmds->cmd_path);
-	// 	data->cmds = data->cmds->next;
-	// }
-
 }
 
 static void	get_files(int argc, char **argv, t_pipex *data)
