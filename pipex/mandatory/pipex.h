@@ -40,6 +40,7 @@
 
 typedef struct s_cmd_node
 {
+	char				*tmp_argv_cmds;
 	char				*cmd_path;
 	char				**path_and_flags;
 	struct s_cmd_node	*next;
