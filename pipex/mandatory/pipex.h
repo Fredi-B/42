@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/17 17:06:09 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/20 15:09:49 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	parsing(int argc, char **argv, char **env, t_pipex *data);
 /*  -------------------------- parsing_utils.c ----------------------------- */
 
 char	*add_slash_and_join(char *path, char *cmd_part);
+void	add_node(t_pipex *data, t_cmd_node *new_node);
+void	store_cmds(t_pipex *data, char *tmp_c_p, int i);
 int		get_prefix_len(char *env);
 
 /*  ------------------------------ piping.c -------------------------------- */
