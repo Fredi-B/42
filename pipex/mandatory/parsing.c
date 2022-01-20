@@ -47,10 +47,9 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 		if (!new_node)
 			err_exit(data, "Error: malloc new_node", 22);
 		data->cmds = new_node;
-		/* Notiz an mich: hab path_and_flags von * zu ** gewechselt.
-		Unschöne Nebenwirkung, dass ich jetzt argv[i]
-		in einem doppel pointer vorübergehend speicher */
-		data->cmds->path_and_flags = &argv[i];
+		data->cmds->tmp_argv_cmds = ft_strdup(argv[i]);
+		if (!data->cmds->tmp_argv_cmds)
+			err_exit(data, "Error: strdup(argv[1]", 21);
 		tmp_argv = ft_split(argv[i], ' ');
 		if (!tmp_argv)
 			err_exit(data, "Error: split argv[i]", 20);
@@ -89,7 +88,8 @@ static void	join_path_and_cmds(t_pipex *data)
 			{
 				free(data->cmds->cmd_path);
 				data->cmds->cmd_path = tmp_c_p;
-				tmp_p_f = add_slash_and_join(data->paths[i], *data->cmds->path_and_flags);
+				tmp_p_f = add_slash_and_join(data->paths[i], data->cmds->tmp_argv_cmds);
+				free(data->cmds->tmp_argv_cmds);
 				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
 				free(tmp_p_f);
 				break ;
@@ -98,7 +98,8 @@ static void	join_path_and_cmds(t_pipex *data)
 			i++;
 			if (data->paths[i] == NULL)
 			{
-				tmp_p_f = add_slash_and_join(data->paths[i], *data->cmds->path_and_flags);
+				tmp_p_f = add_slash_and_join(data->paths[i], data->cmds->tmp_argv_cmds);
+				free(data->cmds->tmp_argv_cmds);
 				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
 				free(tmp_p_f);
 				write(2, "command not found: ", 19);
@@ -112,7 +113,8 @@ static void	join_path_and_cmds(t_pipex *data)
 static void	get_files(int argc, char **argv, t_pipex *data)
 {
 	data->files = (char **)malloc(sizeof(char *) * (2 + 1));
-	/* to do: protecten */
+	if (!data->files)
+		err_exit(data, "Error: malloc data->files", 25);
 	data->files[0] = ft_strdup(argv[1]);
 	data->files[1] = ft_strdup(argv[argc -1]);
 	data->files[2] = NULL;
