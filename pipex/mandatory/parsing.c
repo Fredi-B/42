@@ -57,16 +57,7 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 		if (!data->cmds->cmd_path)
 			err_exit(data, "Error: strdup(tmp_argv[0]", 25);
 		free_two_d_arr(tmp_argv);
-		if (data->cmds == NULL)
-		{
-			data->head = new_node;
-			data->head->next = NULL;
-		}
-		else
-		{
-			new_node->next = data->head;
-			data->head = new_node;
-		}
+		add_node(data, new_node);
 		i--;
 	}
 }
@@ -74,7 +65,6 @@ static void	get_cmds(int argc, char **argv, t_pipex *data)
 static void	join_path_and_cmds(t_pipex *data)
 {
 	char	*tmp_c_p;
-	char	*tmp_p_f;
 	int		i;
 
 	data->cmds = data->head;
@@ -86,25 +76,13 @@ static void	join_path_and_cmds(t_pipex *data)
 			tmp_c_p = add_slash_and_join(data->paths[i], data->cmds->cmd_path);
 			if (access(tmp_c_p, X_OK) == 0)
 			{
-				free(data->cmds->cmd_path);
-				data->cmds->cmd_path = tmp_c_p;
-				tmp_p_f = add_slash_and_join(data->paths[i], data->cmds->tmp_argv_cmds);
-				free(data->cmds->tmp_argv_cmds);
-				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
-				free(tmp_p_f);
+				store_cmds(data, tmp_c_p, i);
 				break ;
 			}
 			free(tmp_c_p);
 			i++;
 			if (data->paths[i] == NULL)
-			{
-				tmp_p_f = add_slash_and_join(data->paths[i], data->cmds->tmp_argv_cmds);
-				free(data->cmds->tmp_argv_cmds);
-				data->cmds->path_and_flags = ft_split(tmp_p_f, ' ');		
-				free(tmp_p_f);
-				write(2, "command not found: ", 19);
-				err_exit(data, data->cmds->cmd_path, ft_strlen(data->cmds->cmd_path));
-			}
+				store_cmds(data, tmp_c_p, i);
 		}
 		data->cmds = data->cmds->next;
 	}
@@ -116,6 +94,10 @@ static void	get_files(int argc, char **argv, t_pipex *data)
 	if (!data->files)
 		err_exit(data, "Error: malloc data->files", 25);
 	data->files[0] = ft_strdup(argv[1]);
-	data->files[1] = ft_strdup(argv[argc -1]);
+	if (!data->files[0])
+		err_exit(data, "Error: strdup(argv[1]", 21);
+	data->files[1] = ft_strdup(argv[argc - 1]);
+	if (!data->files[1])
+		err_exit(data, "Error: strdup(argv[argc - 1]", 28);
 	data->files[2] = NULL;
 }
