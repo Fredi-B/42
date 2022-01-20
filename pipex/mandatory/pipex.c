@@ -7,10 +7,11 @@ int	main(int argc, char **argv, char **env)
 {
 	t_pipex	data;
 
-	//if (argc != 5)
-	//{
-	//	
-	//}
+	if (argc != 5)
+	{
+		write(2, "Use: <infile> \"cmd1\" \"cmd2\" <outfile>\n", 38);
+		return (1);
+	}
 	init_struct(&data, env);
 	parsing(argc, argv, env, &data);
 	piping(&data);
