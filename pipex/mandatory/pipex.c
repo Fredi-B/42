@@ -7,6 +7,10 @@ int	main(int argc, char **argv, char **env)
 {
 	t_pipex	data;
 
+	//if (argc != 5)
+	//{
+	//	
+	//}
 	init_struct(&data, env);
 	parsing(argc, argv, env, &data);
 	piping(&data);
