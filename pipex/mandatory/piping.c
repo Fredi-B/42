@@ -13,7 +13,7 @@ void	piping(t_pipex *data)
 	data->cmds = data->head;
 	data->pid1 = fork();
 	if (data->pid1 == -1)
-		err_exit(data, "Error: create fork", 18);
+		err_exit(data, "Error: create fork 1", 20);
 	if (data->pid1 == 0)
 		write_in_pipe(data);
 	if (data->pid1 != 0)
@@ -22,7 +22,7 @@ void	piping(t_pipex *data)
 		data->cmds = data->cmds->next;
 		data->pid2 = fork();
 		if (data->pid2 == -1)
-			err_exit(data, "Error: create fork", 18);
+			err_exit(data, "Error: create fork 2", 20);
 		if (data->pid2 == 0)
 			read_from_pipe(data);
 	}
