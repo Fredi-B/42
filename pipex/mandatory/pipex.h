@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/20 15:09:49 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/21 10:38:20 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include "../libft/libft.h"
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <limits.h>
 # include <sys/wait.h>
 # include <sys/types.h>
@@ -27,13 +26,13 @@
 
 /* ----------------------------- Defines ----------------------------------- */
 
-# define TRUE 1
-# define FALSE 0
+/* # define TRUE 1
+# define FALSE 0 */
 
 /* ---------------------- Defines for debugging ---------------------------- */
 
-# define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
-# define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr)
+/* # define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
+# define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr) */
 
 
 /* ----------------------------- Structures -------------------------------- */
@@ -53,7 +52,6 @@ typedef struct s_pipex
 	char	**envp;
 	t_cmd_node	*cmds;
 	t_cmd_node	*head;
-	//fd_pipe mallocen?
 	int		*fd_pipe;
 	int		pid1;
 	int		pid2;
@@ -75,10 +73,6 @@ int		get_prefix_len(char *env);
 /*  ------------------------------ piping.c -------------------------------- */
 
 void	piping(t_pipex *data);
-
-
-
-
 
 /*  ----------------------------- err_exit.c -------------------------------- */
 
