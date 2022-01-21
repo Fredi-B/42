@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/21 16:48:36 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/21 19:47:26 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 /* ---------------------- Defines for debugging ---------------------------- */
 
-# define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
-# define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr)
+// # define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
+// # define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr)
 
 /* ----------------------------- Structures -------------------------------- */
 
@@ -74,9 +74,12 @@ int		get_prefix_len(char *env);
 /*  --------------------------- piping_bonus.c ----------------------------- */
 
 void	piping(t_pipex *data);
+void	read_write_pipe(t_pipex *data, int *pipe_r, int *pipe_w);
 
 /*  ------------------------ piping_utils_bonus.c -------------------------- */
 
+int		fork_write_child(t_pipex *data);
+int		check_for_middle_cmds(t_pipex *data);
 void	check_pipe_flag(t_pipex *data);
 
 /*  --------------------------- err_exit_bonus.c --------------------------- */
