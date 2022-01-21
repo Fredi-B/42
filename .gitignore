@@ -58,3 +58,7 @@ dkms.conf
 pipex/mandatory/infile
 .gitignore
 pipex/mandatory/outfile
+pipex/bonus/infile
+.gitignore
+pipex/bonus/outfile
+pipex/bonus/pipex
