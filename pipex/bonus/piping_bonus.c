@@ -13,6 +13,9 @@ void	piping(t_pipex *data)
 	pid_w_and_r = 1;
 	pid_w = fork_write_child(data);
 	if (pid_w == 0)
+	/* if (here_doc)
+			put_here_doc_in_pipe
+		else */
 		write_in_pipe(data);
 	else
 		pid_w_and_r = check_for_middle_cmds(data);
