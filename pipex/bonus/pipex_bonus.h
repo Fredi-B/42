@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/21 19:47:26 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/24 18:05:08 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 
 /* ---------------------- Defines for debugging ---------------------------- */
 
-// # define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
-// # define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr)
+# define dsprintf(expr) printf("\n" #expr ":\n|%s|\n", expr)
+# define diprintf(expr) printf("\n" #expr ":\n|%d|\n", expr)
 
 /* ----------------------------- Structures -------------------------------- */
 
@@ -56,6 +56,7 @@ typedef struct s_pipex
 	int			*pipe_r;
 	int			*pipe_w;
 	int			pipe_flag;
+	char		*here_doc;
 }				t_pipex;
 
 /*  ------------------------ Function prototypes --------------------------- */
@@ -81,6 +82,10 @@ void	read_write_pipe(t_pipex *data, int *pipe_r, int *pipe_w);
 int		fork_write_child(t_pipex *data);
 int		check_for_middle_cmds(t_pipex *data);
 void	check_pipe_flag(t_pipex *data);
+
+/*  ------------------------ pipe_here_doc_bonus.c ------------------------- */
+
+void	pipe_here_doc(t_pipex *data, char **argv);
 
 /*  --------------------------- err_exit_bonus.c --------------------------- */
 
