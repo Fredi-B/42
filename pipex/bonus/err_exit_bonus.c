@@ -22,6 +22,8 @@ void	free_data(t_pipex *data)
 		free(data->fd_pipe_b);
 		data->fd_pipe_b = NULL;
 	}
+	free(data->here_doc);
+	data->here_doc = NULL;
 }
 
 /* exit fct for errors during parsing / input checking.
