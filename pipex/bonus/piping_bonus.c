@@ -14,7 +14,8 @@ void	piping(t_pipex *data)
 	pid_w = fork_write_child(data);
 	if (pid_w == 0)
 	/* if (here_doc)
-			put_here_doc_in_pipe
+			put_here_doc_in_pipe() // almost the same as write_in_pipe.
+										change fd_infile to write(fd?, data->here_doc, ft_strlen(data->heredoc))
 		else */
 		write_in_pipe(data);
 	else
