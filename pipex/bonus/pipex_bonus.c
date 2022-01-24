@@ -9,12 +9,16 @@ int	main(int argc, char **argv, char **env)
 
 	if (argc < 5)
 	{
-		write(2, "Use: <infile> \"cmd_1\" ... \"cmd_n\" <outfile>\n", 44);
+		write(2, "Use: <infile> \"cmd1\" ... \"cmdn\" <outfile>\n", 42);
+		write(2, "or: here_doc LIMITER \"cmd1\" \"cmd2\" <file>\n", 42);
 		return (1);
 	}
 	init_struct(&data, env);
 	parsing(argc, argv, env, &data);
-	piping(&data);
+	if (ft_strncmp(argv[1], "here_doc\0", 9) == 0)
+		pipe_here_doc(&data, argv);
+	else
+		piping(&data);
 	free_data(&data);
 	// system("leaks pipex");
 	return (0);
@@ -28,6 +32,7 @@ static void	init_struct(t_pipex *data, char **env)
 	data->head = NULL;
 	data->fd_pipe_a = NULL;
 	data->fd_pipe_b = NULL;
+	data->here_doc = NULL;
 	cpy_env(env, data);
 }
 
