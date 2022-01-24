@@ -2,11 +2,15 @@
 
 static void	read_from_here_doc(t_pipex *data, char **argv);
 static char	*join_here_doc(t_pipex *data, char *tmp_next_line, char *limiter);
+static void	put_here_doc_in_pipe(t_pipex *data);
+
 
 void	pipe_here_doc(t_pipex *data, char **argv)
 {
 	read_from_here_doc(data, argv);
-	
+	/* hier piping() callen und das if statement checkt dann wie es weiter geht.
+	alles außer write_in_pipe kann hoffentlich übernommen werden */
+	put_here_doc_in_pipe(data);
 }
 
 static void	read_from_here_doc(t_pipex *data, char **argv)
@@ -47,4 +51,9 @@ static char	*join_here_doc(t_pipex *data, char *tmp_next_line, char *limiter)
 	free(tmp_here_doc);
 	tmp_here_doc = NULL;
 	return (tmp_next_line);
+}
+
+static void	put_here_doc_in_pipe(t_pipex *data)
+{
+
 }
