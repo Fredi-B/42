@@ -6,7 +6,7 @@
 /*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/22 15:11:58 by fbechtol          #+#    #+#             */
-/*   Updated: 2022/01/24 18:05:08 by fbechtol         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:53:16 by fbechtol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 # define PIPE_A 1
 # define PIPE_B 0
+# define YES 0
+# define NO 1
 
 /* ---------------------- Defines for debugging ---------------------------- */
 
@@ -57,6 +59,7 @@ typedef struct s_pipex
 	int			*pipe_w;
 	int			pipe_flag;
 	char		*here_doc;
+	int			here_doc_flag;
 }				t_pipex;
 
 /*  ------------------------ Function prototypes --------------------------- */
@@ -83,9 +86,12 @@ int		fork_write_child(t_pipex *data);
 int		check_for_middle_cmds(t_pipex *data);
 void	check_pipe_flag(t_pipex *data);
 
-/*  ------------------------ pipe_here_doc_bonus.c ------------------------- */
+/*  ------------------------ here_doc_bonus.c ------------------------- */
 
-void	pipe_here_doc(t_pipex *data, char **argv);
+void	get_cmd_here_doc(int argc, char **argv, t_pipex *data);
+void	read_from_here_doc(t_pipex *data, char **argv);
+void	put_here_doc_in_pipe(t_pipex *data);
+
 
 /*  --------------------------- err_exit_bonus.c --------------------------- */
 
