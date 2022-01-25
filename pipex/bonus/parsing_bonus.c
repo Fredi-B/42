@@ -8,7 +8,10 @@ static void	get_files(int argc, char **argv, t_pipex *data);
 void	parsing(int argc, char **argv, char **env, t_pipex *data)
 {
 	get_paths_from_env(env, data);
-	get_cmds(argc, argv, data);
+	if (data->here_doc_flag == YES)
+		get_cmd_here_doc(argc, argv, data);
+	else
+		get_cmds(argc, argv, data);
 	join_path_and_cmds(data);
 	get_files(argc, argv, data);
 }
