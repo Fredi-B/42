@@ -15,8 +15,7 @@ void	piping(t_pipex *data)
 	if (pid_w == 0)
 	{
 		if (data->here_doc_flag == YES)
-			put_here_doc_in_pipe(data); // almost the same as write_in_pipe.
-										// change fd_infile to write(fd?, data->here_doc, ft_strlen(data->heredoc))
+			put_here_doc_in_pipe(data);
 		else
 			write_in_pipe(data);
 	}
