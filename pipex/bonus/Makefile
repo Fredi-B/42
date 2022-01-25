@@ -6,7 +6,7 @@
 #    By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/19 14:37:51 by fbechtol          #+#    #+#              #
-#    Updated: 2022/01/24 13:32:14 by fbechtol         ###   ########.fr        #
+#    Updated: 2022/01/25 17:29:56 by fbechtol         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror #-ggdb3 -fsanitize=address
 # -L followed by the relative path of the library to link it 
 LIBFT_LINKING = -L ../libft -lft
 CFILES = pipex_bonus.c parsing_bonus.c parsing_utils_bonus.c \
-		piping_bonus.c piping_utils_bonus.c pipe_here_doc_bonus.c \
+		piping_bonus.c piping_utils_bonus.c here_doc_bonus.c \
 		err_exit_bonus.c
 OBJECTS = $(patsubst %.c,%.o,$(CFILES))
 
