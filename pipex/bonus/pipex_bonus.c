@@ -1,6 +1,6 @@
 #include "pipex_bonus.h"
 
-static void	init_struct(t_pipex *data, char **env);
+static void	init_struct(t_pipex *data, char **argv, char **env);
 static void	cpy_env(char **env, t_pipex *data);
 
 int	main(int argc, char **argv, char **env)
@@ -13,18 +13,17 @@ int	main(int argc, char **argv, char **env)
 		write(2, "or: here_doc LIMITER \"cmd1\" \"cmd2\" <file>\n", 42);
 		return (1);
 	}
-	init_struct(&data, env);
+	init_struct(&data, argv, env);
 	parsing(argc, argv, env, &data);
-	if (ft_strncmp(argv[1], "here_doc\0", 9) == 0)
-		pipe_here_doc(&data, argv);
-	else
-		piping(&data);
+	if (data.here_doc_flag == YES)
+		read_from_here_doc(&data, argv);
+	piping(&data);
 	free_data(&data);
 	// system("leaks pipex");
 	return (0);
 }
 
-static void	init_struct(t_pipex *data, char **env)
+static void	init_struct(t_pipex *data, char **argv, char **env)
 {
 	data->paths = NULL;
 	data->files = NULL;
@@ -33,6 +32,10 @@ static void	init_struct(t_pipex *data, char **env)
 	data->fd_pipe_a = NULL;
 	data->fd_pipe_b = NULL;
 	data->here_doc = NULL;
+	if (ft_strncmp(argv[1], "here_doc\0", 9) == 0)
+		data->here_doc_flag = YES;
+	else
+		data->here_doc_flag = NO;
 	cpy_env(env, data);
 }
 
