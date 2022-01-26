@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   piping_bonus.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 14:50:26 by fbechtol          #+#    #+#             */
+/*   Updated: 2022/01/26 14:50:27 by fbechtol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static void	write_in_pipe(t_pipex *data);
@@ -21,7 +33,6 @@ void	piping(t_pipex *data)
 	}
 	else
 		pid_w_and_r = check_for_middle_cmds(data);
-	
 	if (pid_w != 0 && pid_w_and_r != 0)
 	{
 		pid_r = fork();
@@ -83,7 +94,10 @@ static void	read_from_pipe(t_pipex *data, int *pipe_w)
 	if (dup2(pipe_w[0], STDIN_FILENO) == -1)
 		err_exit(data, "Error: redirect STDIN", 21);
 	close(pipe_w[0]);
-	fd_outfile = open(data->files[1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (data->here_doc_flag == YES)
+		fd_outfile = open(data->files[1], O_CREAT | O_WRONLY | O_APPEND, 0777);
+	else
+		fd_outfile = open(data->files[1], O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (fd_outfile == -1)
 		err_exit(data, "Error: outfile: permission denied", 33);
 	if (dup2(fd_outfile, STDOUT_FILENO) == -1)
