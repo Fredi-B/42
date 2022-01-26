@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   piping_utils_bonus.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 14:50:30 by fbechtol          #+#    #+#             */
+/*   Updated: 2022/01/26 14:50:31 by fbechtol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static void	prep_pipe_b(t_pipex *data);
@@ -23,7 +35,6 @@ int	check_for_middle_cmds(t_pipex *data)
 {
 	int	pid_w_and_r;
 
-	wait(NULL);
 	data->pipe_flag = PIPE_B;
 	data->pipe_w = data->fd_pipe_a;
 	data->cmds = data->cmds->next;
@@ -31,6 +42,7 @@ int	check_for_middle_cmds(t_pipex *data)
 	{
 		check_pipe_flag(data);
 		pid_w_and_r = fork();
+		wait(NULL);
 		if (pid_w_and_r == -1)
 			err_exit(data, "Error: create fork w_and_r", 26);
 		if (pid_w_and_r == 0)
