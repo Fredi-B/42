@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 14:50:20 by fbechtol          #+#    #+#             */
+/*   Updated: 2022/01/26 15:09:09 by fbechtol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex_bonus.h"
 
 static void	init_struct(t_pipex *data, char **argv, char **env);
@@ -19,7 +31,6 @@ int	main(int argc, char **argv, char **env)
 		read_from_here_doc(&data, argv);
 	piping(&data);
 	free_data(&data);
-	// system("leaks pipex");
 	return (0);
 }
 
