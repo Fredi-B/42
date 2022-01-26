@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   piping.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbechtol <fbechtol@student.42heilbronn.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/26 14:51:00 by fbechtol          #+#    #+#             */
+/*   Updated: 2022/01/26 14:51:01 by fbechtol         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "pipex.h"
 
 static void	write_in_pipe(t_pipex *data);
@@ -18,11 +30,11 @@ void	piping(t_pipex *data)
 		write_in_pipe(data);
 	if (data->pid1 != 0)
 	{
-		wait(NULL);
 		data->cmds = data->cmds->next;
 		data->pid2 = fork();
 		if (data->pid2 == -1)
 			err_exit(data, "Error: create fork 2", 20);
+		wait(NULL);
 		if (data->pid2 == 0)
 			read_from_pipe(data);
 	}
